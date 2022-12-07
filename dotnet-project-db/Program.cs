@@ -1,4 +1,7 @@
 using dotnet_project_db.Models;
+using dotnet_project_db.Services.ClaimService;
+using dotnet_project_db.Services.OwnerService;
+using dotnet_project_db.Services.VehicleService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +17,9 @@ builder.Services.AddDbContext<AppDBContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
+builder.Services.AddScoped<IOwnerService, OwnerServiceImpl>();
+builder.Services.AddScoped<IVehicleService, VehicleServiceImpl>();
+builder.Services.AddScoped<IClaimService, ClaimServiceImpl>();
 
 var app = builder.Build();
 
